@@ -1,6 +1,8 @@
 spring:
   application:
     name: blog-api
+  liquibase:
+    enabled: false
   datasource:
     driver-class-name: org.postgresql.Driver
     url: ${DATASOURCE_URL}
