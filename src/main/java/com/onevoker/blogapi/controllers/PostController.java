@@ -1,0 +1,41 @@
+package com.onevoker.blogapi.controllers;
+
+import com.onevoker.blogapi.domain.services.interfaces.PostService;
+import com.onevoker.blogapi.dto.requests.PostRequest;
+import com.onevoker.blogapi.dto.responses.PostResponse;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/posts")
+@RequiredArgsConstructor
+public class PostController {
+    private final PostService postService;
+
+    @GetMapping
+    public List<PostResponse> getAllPosts() {
+        return postService.getAllPosts();
+    }
+
+    @GetMapping("/{id}")
+    public PostResponse getPostById(@PathVariable int id) {
+        return postService.getPostById(id);
+    }
+
+    @PostMapping("/users/{userId}")
+    public void createPost(@PathVariable int userId, @RequestBody PostRequest postRequest) {
+        postService.createPost(userId, postRequest);
+    }
+
+    @PutMapping("/{id}")
+    public void updatePost(@PathVariable int id, PostRequest postRequest) {
+        postService.updatePost(id, postRequest);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletePost(@PathVariable int id) {
+        postService.deletePost(id);
+    }
+}
