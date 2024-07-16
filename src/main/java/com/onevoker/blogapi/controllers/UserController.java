@@ -5,6 +5,7 @@ import com.onevoker.blogapi.dto.requests.UserRequest;
 import com.onevoker.blogapi.dto.responses.PostResponse;
 import com.onevoker.blogapi.dto.responses.UserResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.OffsetDateTime;
@@ -40,12 +41,12 @@ public class UserController {
     }
 
     @PostMapping
-    public void createUser(@RequestBody UserRequest userRequest) {
+    public void createUser(@RequestBody @Validated UserRequest userRequest) {
         userService.createUser(userRequest);
     }
 
     @PutMapping("/{id}")
-    public void updateUser(@PathVariable int id, @RequestBody UserRequest userRequest) {
+    public void updateUser(@PathVariable int id, @Validated @RequestBody UserRequest userRequest) {
         userService.updateUser(id, userRequest);
     }
 

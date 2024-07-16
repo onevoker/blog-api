@@ -1,4 +1,9 @@
 package com.onevoker.blogapi.dto.requests;
 
-public record PostRequest(String title, String content) {
+import jakarta.validation.constraints.NotBlank;
+
+public record PostRequest(
+        @NotBlank
+        String title,
+        String content) {
 }
