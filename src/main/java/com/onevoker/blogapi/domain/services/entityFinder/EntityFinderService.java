@@ -19,7 +19,8 @@ public class EntityFinderService implements EntityFinder {
 
     @Override
     public UserEntity getUserEntity(int userId) {
-        return userEntityRepository.findById(userId).orElseThrow(() -> new NotFoundException(USER_NOT_FOUND_MESSAGE));
+        return userEntityRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND_MESSAGE));
     }
 
     @Override
