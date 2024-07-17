@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @RestController
@@ -23,6 +24,12 @@ public class PostController {
     @GetMapping("/{id}")
     public PostResponse getPostById(@PathVariable int id) {
         return postService.getPostById(id);
+    }
+
+    @GetMapping("/between-dates")
+    public List<PostResponse> getPostsBetweenDates(@RequestParam OffsetDateTime startDate,
+                                                   @RequestParam OffsetDateTime endDate) {
+        return postService.getAllPostsBetweenDates(startDate, endDate);
     }
 
     @PostMapping("/users/{userId}")

@@ -15,6 +15,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.time.OffsetDateTime;
+
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -35,6 +38,9 @@ public class PostControllerTest {
     private static final String POSTS_ENDPOINT = "/posts";
     private static final String USERS_WITH_ID_ENDPOINT = "/users/{userId}";
     private static final String ID_PARAM = "/{id}";
+    private static final String BETWEEN_DATES_PARAM = "/between-dates";
+    private static final String START_DATE_PARAM = "startDate";
+    private static final String END_DATE_PARAM = "endDate";
 
     @BeforeEach
     void setUp() {
@@ -51,6 +57,20 @@ public class PostControllerTest {
                 .andExpect(status().isOk());
 
         verify(postService).getAllPosts();
+    }
+
+    @Test
+    void testGetAllPostsBetweenDates() throws Exception {
+        String startDate = String.valueOf(OffsetDateTime.now());
+        String endDate = String.valueOf(OffsetDateTime.now().plusDays(1));
+
+        api.perform(get(POSTS_ENDPOINT + BETWEEN_DATES_PARAM)
+                        .param(START_DATE_PARAM, startDate)
+                        .param(END_DATE_PARAM, endDate)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        verify(postService).getAllPostsBetweenDates(any(OffsetDateTime.class), any(OffsetDateTime.class));
     }
 
     @Test

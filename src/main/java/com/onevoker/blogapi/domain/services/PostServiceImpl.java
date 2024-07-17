@@ -12,6 +12,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
@@ -32,6 +33,13 @@ public class PostServiceImpl implements PostService {
     public PostResponse getPostById(int id) {
         PostEntity postEntity = entityFinder.getPostEntity(id);
         return entityMapper.getPostResponse(postEntity);
+    }
+
+    @Override
+    public List<PostResponse> getAllPostsBetweenDates(OffsetDateTime startDate, OffsetDateTime endDate) {
+        return postEntityRepository.findByPublishedAtBetween(startDate, endDate).stream()
+                .map(entityMapper::getPostResponse)
+                .toList();
     }
 
     @Override

@@ -7,5 +7,6 @@ import java.time.OffsetDateTime;
 import java.util.List;
 
 public interface PostEntityRepository extends JpaRepository<PostEntity, Integer> {
-    List<PostEntity> findByUserEntityIdAndPublishedAtBetween(int userId, OffsetDateTime startTime, OffsetDateTime endTime);
+    List<PostEntity> findByUserEntityIdAndPublishedAtBetween(int userId, OffsetDateTime startDate, OffsetDateTime endDate);
+    List<PostEntity> findByPublishedAtBetween(OffsetDateTime startDate, OffsetDateTime endDate);
 }

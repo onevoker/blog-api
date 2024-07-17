@@ -69,6 +69,19 @@ public class PostServiceImplIT extends IntegrationTest {
     }
 
     @Test
+    void testGetPostsBetweenDates() {
+        OffsetDateTime dateTimeNow = OffsetDateTime.now();
+        OffsetDateTime startDate = dateTimeNow.minusDays(1);
+        OffsetDateTime endDate = dateTimeNow.plusDays(1);
+
+        List<PostResponse> result = postService.getAllPostsBetweenDates(startDate, endDate);
+
+        assertThat(result)
+                .usingRecursiveFieldByFieldElementComparatorIgnoringFields("publishedAt")
+                .contains(EXPECTED_RESPONSE);
+    }
+
+    @Test
     void testGetPostById() {
         PostResponse result = postService.getPostById(postEntity.getId());
 
